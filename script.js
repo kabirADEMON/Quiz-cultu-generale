@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function showQuestion() {
         const question = questions[currentQuestionIndex];
         const options = question.options.map((option, index) => 
-            `<button onclick="checkAnswer(${index})">${option}</button>`
+            `<button class="btn btn-primary btn-block my-2" onclick="checkAnswer(${index})">${option}</button>`
         ).join("");
 
         quizContainer.innerHTML = `
@@ -106,20 +106,28 @@ document.addEventListener('DOMContentLoaded', function() {
     window.checkAnswer = function(selectedIndex) {
         const question = questions[currentQuestionIndex];
         const correctAnswer = question.answer;
+        const messageDiv = document.createElement('div');
+
         if (selectedIndex === correctAnswer) {
             score++;
-            alert("Bonne réponse !");
+            messageDiv.textContent = "Bonne réponse !";
+            messageDiv.style.color = "green";
         } else {
-            alert(`Mauvaise réponse. La bonne réponse était : ${question.options[correctAnswer]}`);
+            messageDiv.textContent = `Mauvaise réponse. La bonne réponse était : ${question.options[correctAnswer]}`;
+            messageDiv.style.color = "red";
         }
 
-        currentQuestionIndex++;
-        if (currentQuestionIndex < questions.length) {
-            showQuestion();
-        } else {
-            quizContainer.innerHTML = `<h2>Quiz terminé ! Votre score est de ${score} sur ${questions.length}</h2>`;
-        }
-    }
+        quizContainer.appendChild(messageDiv);
+
+        setTimeout(() => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                quizContainer.innerHTML = `<h2>Quiz terminé ! Votre score est de ${score} sur ${questions.length}</h2>`;
+            }
+        }, 2000);
+    };
 
     showQuestion();
 });
