@@ -7,6 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
             answer: 0
         },
         {
+            question: "Quel est le pays le plus peuplé du monde ?",
+            options: ["Inde", "États-Unis", "Chine", "Brésil"],
+            answer: 2
+        },
+
+        {
             question: "Quel joueur a remporté le Ballon d'Or 2023 ?",
             options: ["Karim Benzema", "Erling Haaland", "Lionel Messi", "Kylian Mbappé"],
             answer: 2
