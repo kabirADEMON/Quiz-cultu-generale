@@ -1,41 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const quizContainer = document.getElementById('quiz-container');
+    const timerDisplay = document.getElementById('timer');
     const questions = [
         {
             question: "Quelle est la capitale de la France ?",
             options: ["Paris", "Londres", "Berlin", "Rome"],
             answer: 0
-        },
-        {
-            question: "Quel est le pays le plus peuplé du monde ?",
-            options: ["Inde", "États-Unis", "Chine", "Brésil"],
-            answer: 2
-        },
-
-        {
-            question: "Quel joueur a remporté le Ballon d'Or 2023 ?",
-            options: ["Karim Benzema", "Erling Haaland", "Lionel Messi", "Kylian Mbappé"],
-            answer: 2
-        },
-        {
-            question: "Quelle équipe a gagné la Ligue des champions de l'UEFA 2023 ?",
-            options: ["Manchester City", "Real Madrid", "Bayern Munich", "Paris Saint-Germain"],
-            answer: 0
-        },
-        {
-            question: "Quel club Lionel Messi a-t-il rejoint après avoir quitté le Paris Saint-Germain en 2023 ?",
-            options: ["FC Barcelone", "Inter Miami", "Al-Hilal", "Manchester City"],
-            answer: 1
-        },
-        {
-            question: "Quel pays a accueilli la Coupe du Monde Féminine de la FIFA 2023 ?",
-            options: ["France", "Japon", "Australie et Nouvelle-Zélande", "États-Unis"],
-            answer: 2
-        },
-        {
-            question: "Quel joueur a été transféré pour un montant record en 2024 ?",
-            options: ["Jude Bellingham", "Declan Rice", "Kylian Mbappé", "Erling Haaland"],
-            answer: 1
         },
         {
             question: "Quel club est surnommé 'Les Gunners' ?",
@@ -78,54 +48,51 @@ document.addEventListener('DOMContentLoaded', function() {
             answer: 2
         },
         {
-            question: "Quel est le plus grand océan du monde ?",
-            options: ["Atlantique", "Arctique", "Pacifique", "Indien"],
+            question: "Quel joueur a remporté le Ballon d'Or 2023 ?",
+            options: ["Karim Benzema", "Erling Haaland", "Lionel Messi", "Kylian Mbappé"],
             answer: 2
         },
         {
-            question: "Qui a écrit 'Les Misérables' ?",
-            options: ["Victor Hugo", "Émile Zola", "Albert Camus", "Gustave Flaubert"],
+            question: "Quelle équipe a gagné la Ligue des champions de l'UEFA 2023 ?",
+            options: ["Manchester City", "Real Madrid", "Bayern Munich", "Paris Saint-Germain"],
             answer: 0
         },
         {
-            question: "Quelle planète est la plus proche du Soleil ?",
-            options: ["Vénus", "Mars", "Mercure", "Jupiter"],
-            answer: 2
-        },
-        {
-            question: "Quel joueur a remporté le plus de Ballons d'Or ?",
-            options: ["Cristiano Ronaldo", "Lionel Messi", "Zinédine Zidane", "Pelé"],
+            question: "Quel club Lionel Messi a-t-il rejoint après avoir quitté le Paris Saint-Germain en 2023 ?",
+            options: ["FC Barcelone", "Inter Miami", "Al-Hilal", "Manchester City"],
             answer: 1
         },
         {
-            question: "Quel pays a remporté la Coupe du Monde de la FIFA en 2018 ?",
-            options: ["Brésil", "Allemagne", "France", "Argentine"],
+            question: "Quel pays a accueilli la Coupe du Monde Féminine de la FIFA 2023 ?",
+            options: ["France", "Japon", "Australie et Nouvelle-Zélande", "États-Unis"],
             answer: 2
         },
         {
-            question: "Quel club a remporté le plus de Ligues des champions de l'UEFA ?",
-            options: ["FC Barcelone", "Liverpool FC", "Real Madrid", "Bayern Munich"],
-            answer: 2
-        },
-        {
-            question: "Quel joueur est surnommé 'El Fenómeno' ?",
-            options: ["Ronaldinho", "Neymar", "Ronaldo", "Romário"],
-            answer: 2
-        },
-        {
-            question: "Quelle équipe a remporté le premier championnat d'Europe en 1960 ?",
-            options: ["Espagne", "URSS", "Italie", "Allemagne de l'Ouest"],
+            question: "Quel joueur a été transféré pour un montant record en 2024 ?",
+            options: ["Jude Bellingham", "Declan Rice", "Kylian Mbappé", "Erling Haaland"],
             answer: 1
         }
     ];
 
     let currentQuestionIndex = 0;
     let score = 0;
+    let startTime;
+    let timerInterval;
+
+    function startTimer() {
+        startTime = Date.now();
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function updateTimer() {
+        const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
+        timerDisplay.textContent = `Temps écoulé : ${elapsedTime}s`;
+    }
 
     function showQuestion() {
         const question = questions[currentQuestionIndex];
         const options = question.options.map((option, index) => 
-            `<button class="btn btn-primary btn-block my-2" onclick="checkAnswer(${index})">${option}</button>`
+            `<button onclick="checkAnswer(${index})">${option}</button>`
         ).join("");
 
         quizContainer.innerHTML = `
@@ -135,30 +102,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     window.checkAnswer = function(selectedIndex) {
-        const question = questions[currentQuestionIndex];
-        const correctAnswer = question.answer;
-        const messageDiv = document.createElement('div');
-
+        const correctAnswer = questions[currentQuestionIndex].answer;
         if (selectedIndex === correctAnswer) {
             score++;
-            messageDiv.textContent = "Bonne réponse !";
-            messageDiv.style.color = "green";
+            alert("Bonne réponse !");
         } else {
-            messageDiv.textContent = `Mauvaise réponse. La bonne réponse était : ${question.options[correctAnswer]}`;
-            messageDiv.style.color = "red";
+            alert(`Mauvaise réponse. La bonne réponse est : ${questions[currentQuestionIndex].options[correctAnswer]}`);
         }
 
-        quizContainer.appendChild(messageDiv);
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questions.length) {
+            showQuestion();
+        } else {
+            clearInterval(timerInterval);
+            quizContainer.innerHTML = `<h2>Quiz terminé ! Votre score est de ${score} sur ${questions.length}. Temps total : ${Math.floor((Date.now() - startTime) / 1000)}s</h2>`;
+        }
+    }
 
-        setTimeout(() => {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                showQuestion();
-            } else {
-                quizContainer.innerHTML = `<h2>Quiz terminé ! Votre score est de ${score} sur ${questions.length}</h2>`;
-            }
-        }, 2000);
-    };
-
+    startTimer();
     showQuestion();
 });
