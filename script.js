@@ -1,12 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const quizContainer = document.getElementById('quiz-container');
-    const timerDisplay = document.getElementById('timer');
     const questions = [
-        {
-            question: "Quelle est la capitale de la France ?",
-            options: ["Paris", "Londres", "Berlin", "Rome"],
-            answer: 0
-        },
         {
             question: "Quel club est surnommé 'Les Gunners' ?",
             options: ["Chelsea", "Manchester United", "Arsenal", "Tottenham"],
@@ -76,18 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let currentQuestionIndex = 0;
     let score = 0;
-    let startTime;
-    let timerInterval;
-
-    function startTimer() {
-        startTime = Date.now();
-        timerInterval = setInterval(updateTimer, 1000);
-    }
-
-    function updateTimer() {
-        const elapsedTime = Math.floor((Date.now() - startTime) / 1000);
-        timerDisplay.textContent = `Temps écoulé : ${elapsedTime}s`;
-    }
 
     function showQuestion() {
         const question = questions[currentQuestionIndex];
@@ -114,11 +96,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentQuestionIndex < questions.length) {
             showQuestion();
         } else {
-            clearInterval(timerInterval);
-            quizContainer.innerHTML = `<h2>Quiz terminé ! Votre score est de ${score} sur ${questions.length}. Temps total : ${Math.floor((Date.now() - startTime) / 1000)}s</h2>`;
+            quizContainer.innerHTML = `<h2>Quiz terminé ! Votre score est de ${score} sur ${questions.length}</h2>`;
         }
     }
 
-    startTimer();
     showQuestion();
 });
