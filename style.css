@@ -7,9 +7,9 @@ body {
     padding: 20px;
 }
 
-#quiz-container {
+#home-container, #quiz-container {
     margin: 20px auto;
-    padding: 20px;
+    padding: 40px;
     background: linear-gradient(135deg, #fff, #e0f7fa);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     width: 80%;
@@ -20,20 +20,17 @@ body {
 h1 {
     color: #00796b;
     font-size: 2.5em;
-    margin-bottom: 10px;
-}
-
-h2 {
-    color: #005662;
-    font-size: 1.5em;
     margin-bottom: 20px;
 }
 
+p {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 30px;
+}
+
 button {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    margin: 10px 0;
+    padding: 15px 30px;
     background-color: #00897b;
     color: #fff;
     border: none;
@@ -50,12 +47,4 @@ button:hover {
 
 button:active {
     background-color: #004d40;
-}
-
-div {
-    transition: background-color 0.3s ease;
-}
-
-div:hover {
-    background-color: #e0f2f1;
 }
