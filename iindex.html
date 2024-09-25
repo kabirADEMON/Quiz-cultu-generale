@@ -7,11 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="home-container">
+    <header>
         <h1>Bienvenue au Quiz de Culture Générale</h1>
-        <p>Testez vos connaissances en répondant à des questions sur divers sujets.</p>
-        <button onclick="startQuiz()">Commencer le Quiz</button>
-    </div>
+    </header>
+    <main id="home-container">
+        <div class="intro">
+            <p>Testez vos connaissances en répondant à des questions sur divers sujets, y compris le sport, l'histoire, la littérature, et bien plus encore !</p>
+            <p>Êtes-vous prêt à relever le défi ? Cliquez sur le bouton ci-dessous pour commencer le quiz et découvrir votre score !</p>
+        </div>
+        <button class="start-btn" onclick="startQuiz()">Commencer le Quiz</button>
+    </main>
+    <footer>
+        <p>© 2024 Quiz de Culture Générale. Tous droits réservés.</p>
+        <p>Contactez-nous à <a href="mailto:support@quizculturegenerale.com">support@quizculturegenerale.com</a></p>
+    </footer>
 
     <script>
         function startQuiz() {
